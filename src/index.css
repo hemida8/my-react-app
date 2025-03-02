@@ -1,0 +1,280 @@
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.image-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: center;
+  animation: rotate 20s infinite linear;
+}
+
+.image-button:active {
+  transform: scale(1.05); /* تكبير عند الضغط */
+}
+
+/* Add this class to stop rotation */
+.image-button:hover {
+  animation-play-state: paused;
+}
+
+.draggable-container {
+  position: absolute;
+  cursor: move;
+  z-index: 1000;
+}
+
+.resizable-image {
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.resizable-image:hover {
+  transform: scale(1.1);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #f5f5f5;
+  padding: 10px;
+}
+
+.image-container {
+  position: relative;
+  z-index: 1;
+}
+
+.rotatable-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  padding: 8px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.drag-handle {
+  width: 100%;
+  height: 100%;
+  cursor: move;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-image {
+  max-width: 100%;
+  max-height: calc(100% - 30px);
+  object-fit: contain;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.controls {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  display: flex;
+  gap: 5px;
+}
+
+.rotation-handle {
+  width: 30px;
+  height: 30px;
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.rotation-handle.right {
+  background: #28a745;
+}
+
+.rotation-handle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.rotation-handle:active {
+  transform: scale(0.95);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 5px;
+  }
+
+  .rotation-handle {
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    top: -12px;
+    right: -12px;
+  }
+
+  .controls {
+    gap: 3px;
+  }
+
+  .rotatable-container {
+    border-width: 1px;
+    padding: 4px;
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 3px;
+  }
+
+  .rotation-handle {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    top: -10px;
+    right: -10px;
+  }
+
+  .controls {
+    gap: 2px;
+  }
+
+  .custom-image {
+    max-height: calc(100% - 20px);
+  }
+}
+
+/* Touch Device Optimization */
+@media (hover: none) {
+  .rotation-handle {
+    background: rgba(0, 123, 255, 0.9);
+    backdrop-filter: blur(2px);
+  }
+
+  .rotation-handle:active {
+    transform: scale(1.2);
+    background: #0056b3;
+  }
+
+  .drag-handle {
+    cursor: grab;
+  }
+}
+
+/* Landscape Mode */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-container {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .custom-image {
+    max-height: 70vh;
+  }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .rotatable-container {
+    border-width: 0.5px;
+  }
+}
+/* تطبيق الخلفية على كامل الصفحة */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* إضافة خلفية متحركة */
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #05803c, #5c16ff, #1d8bf9, #ff7eb3);
+  background-size: 300% 300%;
+  animation: gradientAnimation 6s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+/* حركة للخلفية */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* تأثير موجات شفافة */
+.waves {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.heropatterns.com/img/wave.svg");
+  opacity: 0.1;
+  animation: waveMove 5s infinite linear;
+}
+
+@keyframes waveMove {
+  from { background-position-x: 0; }
+  to { background-position-x: 1000px; }
+}
+.transparent-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3vw; /* حجم نسبي للشاشات المختلفة */
+  font-weight: bold;
+  
+  color: rgba(255, 255, 255, 0.2); /* الشفافية */
+  pointer-events: none; /* حتى لا يؤثر على التفاعل مع العناصر الأخرى */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* تحسين العرض على الشاشات الصغيرة (أقل من 600px مثل الهواتف) */
+@media (max-width: 600px) {
+  .transparent-text {
+    font-size: 6vw; /* تكبير النص قليلاً للهواتف */
+  }
+}
