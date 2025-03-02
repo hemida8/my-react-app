@@ -5,7 +5,7 @@ import "./index.css";
 
 function App() {
   const [images, setImages] = useState<{ src: string; id: number }[]>([]);
-  const [idCounter, setIdCounter] = useState(1); // لتوليد معرف فريد لكل صورة
+  const [idCounter, setIdCounter] = useState(1);
 
   // تحميل الصور من الجهاز
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,12 +13,13 @@ function App() {
       const file = event.target.files[0];
       const reader = new FileReader();
       reader.onload = (e) => {
-        if (e.target && e.target.result) {
+        const result = e.target?.result;
+        if (typeof result === "string") {
           setImages((prevImages) => [
             ...prevImages,
-            { src: e.target.result as string, id: idCounter },
+            { src: result, id: idCounter },
           ]);
-          setIdCounter(idCounter + 1);
+          setIdCounter((prevId) => prevId + 1);
         }
       };
       reader.readAsDataURL(file);
@@ -34,7 +35,6 @@ function App() {
     <div className="app-container">
       <div className="waves"></div>
       <h1 className="transparent-text">🎓 mohammed hemida 🎓</h1>
-      {/* أزرار التحكم */}
       <div className="controls">
         <input
           type="file"
@@ -47,7 +47,6 @@ function App() {
         </button>
       </div>
 
-      {/* عرض الصور */}
       {images.map((image) => (
         <DraggableImage key={image.id} src={image.src} caption="صورة مرفوعة" />
       ))}
